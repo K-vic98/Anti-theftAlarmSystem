@@ -2,20 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class Movement : MonoBehaviour
 {
-    private CharacterController _characterController;
     [SerializeField] private float _speed;
     [SerializeField] private float _speedRotation;
-    void Start()
+
+    private CharacterController _characterController;
+
+    private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
     }
-    void Update()
+
+    private void FixedUpdate()
     {
-        transform.Rotate(0, Input.GetAxis("Horizontal") * _speedRotation, 0); 
-        float curSpeed = _speed * Input.GetAxis("Vertical");
+        MovementLogic();
+    }
+
+    private void MovementLogic()
+    {
+        transform.Rotate(0, Input.GetAxis("Horizontal") * _speedRotation, 0);
         Vector3 forward = transform.TransformDirection(Vector3.forward);
-        _characterController.Move(curSpeed * forward);
+        float curSpeed = _speed * Input.GetAxis("Vertical");
+        _characterController.SimpleMove(curSpeed * forward);
     }
 }
