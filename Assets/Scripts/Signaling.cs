@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlarmController : MonoBehaviour
+public class Signaling : MonoBehaviour
 {
     private AudioSource _audioClip;
     private float _runningTime;
@@ -32,17 +32,6 @@ public class AlarmController : MonoBehaviour
     private void Update()
     {
         _runningTime += Time.deltaTime;
-        if (_runningTime <= 5)
-        {
-            _audioClip.volume += 0.2f * Time.deltaTime;
-        }
-        if (_runningTime > 5 && _runningTime < 10)
-        {
-            _audioClip.volume -= 0.2f * Time.deltaTime;
-        }
-        if(_runningTime >= 10)
-        {
-            _runningTime = 0;
-        }
+        _audioClip.volume = (Mathf.Sin(_runningTime) + 1) / 2;
     }
 }
